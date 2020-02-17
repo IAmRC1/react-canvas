@@ -6,4 +6,19 @@ body{
 }
 .container .canvas-container{
   margin: auto;
+  background-color: bisque;
+}
+
+.container.rotation .canvas-container{
+  background-color: #00000000;
+}
+
+.container.rotation .upper-canvas{
+  z-index: -99 !important;
+  border-bottom: 300px solid #00000010 !important;
+  border-left: 100px solid transparent !important;
+  border-right: 100px solid transparent !important;
+  height: 0 !important;
+  width: 600px !important;
+  transition: all 0.3s ease-in !important;
 }

@@ -5,7 +5,7 @@ import { Button } from 'reactstrap';
 //import _ from 'lodash';
 
 class App extends React.Component {
-  state = { frames: [], noOfFrames: 0, noFrame: false }
+  state = { frames: [], noOfFrames: 0, noFrame: false, canvasRotation: true }
 
   componentDidMount(){
     this.canvas = new fabric.Canvas('c');
@@ -51,7 +51,24 @@ class App extends React.Component {
     this.canvas.clear();
     let canvasData = JSON.stringify({objects : clickedFrame})
     this.canvas.loadFromJSON(canvasData, this.canvas.renderAll.bind(this.canvas));
-     }
+  }
+
+  rotate = () => {
+      var a = document.getElementById('canvas-parent');
+      if(this.state.canvasRotation){
+        a.classList.add('rotation');
+        this.setState({
+          canvasRotation: !this.state.canvasRotation,
+        })
+      }
+      else{
+        a.classList.remove('rotation');
+        this.setState({
+          canvasRotation: !this.state.canvasRotation,
+        })
+      }
+
+    }
 
   clear = () => {
     this.canvas.clear();
@@ -61,12 +78,13 @@ class App extends React.Component {
   render(){
     const { noOfFrames } = this.state;
     return (
-        <div className="container m-3">
-            <canvas id="c" width="600" height="300" className="border border-primary"/>
+        <div className="container m-3" id='canvas-parent'> 
+            <canvas id="c" width="600" height="300" />
             <div className="d-flex justify-content-center mt-3">
               <Button color="primary" onClick={this.addRect}>Add Object</Button>
               <Button color="success" onClick={this.newFrame} className="ml-2" disabled={!this.state.noFrame}>New Frame</Button>
               <Button color="danger" onClick={this.clear} className="ml-2" disabled={!this.state.noFrame}>Clear Canvas</Button>
+              <Button color="info" onClick={this.rotate} className="rotate ml-2">Rotate Canvas</Button>
             </div>
             <h5 className="text-center mt-3">No. of frames saved: {noOfFrames}</h5>
             <div className="d-flex justify-content-center flex-wrap">
